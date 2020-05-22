@@ -1,0 +1,99 @@
+{
+  "data": [
+    {
+      "id": "data",
+      "label": "Data Fields",
+      "elements": [
+        {
+          "id": "dimensions",
+          "label": "Dimensions",
+          "type": "DIMENSION",
+          "options": {
+            "min": 0,
+            "max": 2,
+            "supportedTypes": ["DEFAULT"]
+          }
+        },
+        {
+          "id": "metrics",
+          "label": "Metric",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "style": [
+    {
+      "id": "colors",
+      "label": "Colors",
+      "elements":[
+        {
+          "id": "level_color",
+          "label": "Level Color",
+          "type": "FILL_COLOR",
+          "defaultValue": {
+            "color": "#000000"
+          }
+        },
+        {
+          "id": "label_color",
+          "label": "Label color",
+          "type": "FILL_COLOR",
+          "defaultValue": {
+            "color": "#000000"
+          }
+        },
+        {
+          "id": "line_color",
+          "label": "Line Color",
+          "type": "FILL_COLOR",
+          "defaultValue": {
+	          "color": "#000000"
+	      	}
+        },
+        {
+	        "id": "filter_color",
+	        "label": "Filter Highlight Color",
+	        "type": "FILL_COLOR",
+	        "defaultValue": {
+		        "color": "#000000"
+	        }
+        }
+
+      ]
+    },
+    {
+	  "id": "font",
+	  "label": "Font",
+	  "elements": [
+		{
+		  "id": "font_size",
+		  "label": "Font Size",
+		  "type": "FONT_SIZE",
+		  "defaultValue": "12"
+		}
+	  ]
+    },
+    {
+	    "id": "legend",
+	    "label": "Legend",
+	    "elements": [
+		    {
+			    "id": "show_legend",
+			    "label": "Show Legend?",
+			    "type": "CHECKBOX"
+		    }
+	    ]
+    }
+  ],
+  "interactions": [
+    {
+      "id": "onClick",
+      "supportedActions": ["FILTER"]
+    }
+  ]
+}

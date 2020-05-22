@@ -1,0 +1,25 @@
+{
+  "name": "Radar",
+  "organization": "NA",
+  "description": "Radar visualization built with d3.js",
+  "logoUrl": "https://url.com",
+  "organizationUrl": "https://url.com",
+  "supportUrl": "https://url.com",
+  "privacyPolicyUrl": "https://url.com",
+  "termsOfServiceUrl": "https://url.com",
+  "packageUrl": "https://url.com",
+  "devMode": "DEVMODE_BOOL",
+  "components": [
+    {
+      "id": "radar",
+      "name": "Radar",
+      "description": "Radar visualization built with d3.js",
+      "iconUrl": "https://raw.githubusercontent.com/googledatastudio/experimental-visualizations/master/viz/sankey/src/sankey.png",
+      "resource": {
+        "js": "gs://cus_comm_viz/radar_d3/dev/index.js",
+        "config": "gs://cus_comm_viz/radar_d3/dev/index.json",
+        "css": "gs://cus_comm_viz/radar_d3/dev/index.css"
+      }
+    }
+  ]
+}
