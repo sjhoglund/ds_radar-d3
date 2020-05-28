@@ -7,6 +7,9 @@ import * as ut from './utils.js';
 // change this to 'false' before deploying
 export const LOCAL = false;
 
+// This click function handles the chart interaction functionality AKA filtering.
+// When a category (axis) is clicked, then this provides datastudio with the details
+// and applies styling to the chart - note, the data for the chart remains untouched.
 function click(d, message) {
 	//console.log(d);
 	const FILTER = dscc.InteractionType.FILTER;
@@ -60,7 +63,8 @@ function click(d, message) {
   }
 }
 
-// write viz code here
+// Get the groups from the second dimension which will create multiple
+// shapes if more than one group.
 const parseGroups = data => {
   var groups = [];
   var groupTotals = [];
@@ -88,6 +92,7 @@ const parseGroups = data => {
   return groupData;
 }
 
+// The data needs to be reformated to work with d3.
 const parseData = data => {
   
   var pdata = [];
@@ -137,6 +142,8 @@ const parseData = data => {
   return rdata;
 };
 
+// The styleVal function pulls the user selected styles which are then
+// used throughout the build of the chart script.
 const styleVal = (message, styleId) => {
   // to account for color styling
   if (typeof message.style[styleId].defaultValue === 'object') {
@@ -149,8 +156,12 @@ const styleVal = (message, styleId) => {
     : message.style[styleId].defaultValue;
 };
 
+// This is the main function that builds the chart and functionality.
 const draw = message => {
+	// Reformatting the data.
   const d = parseData(message.tables.DEFAULT);
+  // Get the groups of the second dimension and declare
+  // as LegendOptions.
   var LegendOptions = [];
   if (message.tables.DEFAULT[0].dimensions[1] !== undefined) {
 	  LegendOptions = parseGroups(message.tables.DEFAULT);
@@ -168,12 +179,17 @@ const draw = message => {
 		  maxVal: maxdVals
 	  });
   }
+  // Find the maximum value for all metric values and round up to the next integer.
+  // Example: if the max value is 5.5, then maxVal is 6.
   var maxVal = Math.round(LegendOptions.map(function(d){return d.maxVal}).reduce(function(a, b) {
 	    return Math.max(a, b);
 	}) * 10 + 1);
 	
+	// The number of levels should match maxVal.
 	var levels = maxVal;
 	
+	// Adjust the level is the maxVal is greater than 10, which is 100%.
+	// This ensures the chart will render properly at all times.
 	if (maxVal > 10){
 		if(maxVal > 50){
 			maxVal = Math.ceil(maxVal/10)*10;
@@ -205,6 +221,7 @@ const draw = message => {
   var w = height - 150;
   var h = height - 150;
   
+  // Declare configuration settings.
   var cfg = {
 	 radius: 5,
 	 w: w,
@@ -229,6 +246,7 @@ const draw = message => {
 	 filterColor: styleVal(message, 'filter_color'),
 	};
 	
+	// Additional variables used further down.
 	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
 	var allAxis = (d[0].map(function(i, j){return i.axis}));
 	var total = allAxis.length;
@@ -298,6 +316,7 @@ const draw = message => {
 	
 	series = 0;
 
+	// Create the various axis.
 	var axis = g.selectAll(".axis")
 			.data(allAxis)
 			.enter()
@@ -328,10 +347,12 @@ const draw = message => {
 		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
 		.on('click', d => click(d, message));
 		
-		
+	// Check is filter option is selected.
 	const enableInteractions =
     message.interactions.onClick.value.type === 'FILTER' ? true : false;
 
+	// If filtering is enabled and items have been selected, then adjust the color
+	// of the axis and axis title.
   if (enableInteractions) {
 	  var lineSelector = "";
 	  var textSelector = "";
@@ -349,6 +370,7 @@ const draw = message => {
     }
   }
 
+	// Build the shapes for each group.
 	d.forEach(function(y, x){
 	  dataValues = [];
 	  g.selectAll(".nodes")
@@ -394,6 +416,7 @@ const draw = message => {
 	series=0;
 
 
+	// Add circles to indecate each point on each axis.
 	d.forEach(function(y, x){
 	  g.selectAll(".nodes")
 		.data(y).enter()
@@ -467,6 +490,8 @@ const draw = message => {
 	  series++;
 	});
 	
+	// Build the legend to help distinguish the groups/different shapes
+	// from the second dimension.
 	if (styleVal(message, 'show_legend')) {		   
 	    var svg = d3.select(id)
 			.selectAll('svg');
