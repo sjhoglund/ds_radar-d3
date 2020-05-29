@@ -11,7 +11,7 @@ This [radar] community visualization built with d3.js takes 2 dimensions and a m
 
 ## Webpack usage
 
-This package uses dscc-gen for local development [dscc-gen].
+This package uses [dscc-gen] for local development. Simply follow the instructions on that page and you're good to go.
 
 ## Deployed version
 
