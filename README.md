@@ -9,6 +9,10 @@ This [radar] community visualization built with d3.js takes 2 dimensions and a m
 
 > Note: This radar will not render properly if the metric values are not in decimal format, not percent.
 
+## Webpack usage
+
+This package uses dscc-gen for local development [dscc-gen].
+
 ## Deployed version
 
 Component ID of the deployed version of this visualization:
@@ -26,4 +30,5 @@ This code was written by Steven Hoglund.
 [community viz]: http://developers.google.com/datastudio/visualization
 [datastudio]: https://datastudio.google.com
 [cardinality]: https://en.wikipedia.org/wiki/Cardinality
+[dscc-gen]: https://developers.google.com/datastudio/visualization/library
 [deployed]: TBD
